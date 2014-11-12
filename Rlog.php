@@ -26,59 +26,61 @@ abstract class Rlog
 	 * @param  array  $conf 配置文件，设置日志驱动等
 	 * @return object       日志类对象
 	 */
-	public static function instance($conf=array())
+	public static function instance($driver_name='file', $conf=array())
 	{
-		if (empty($conf)) $conf = include_once('Conf'.DIRECTORY_SEPARATOR.'file.php');
+		$driver_conf_file = __DIR__.DIRECTORY_SEPARATOR.'Conf'.DIRECTORY_SEPARATOR.$driver_name.'.php';
+		if (!is_file($driver_conf_file)) throw new Rlog_exception('Rlog '.$driver_name.' Driver conf is not found!');
+		if (empty($conf)) $conf = include_once($driver_conf_file);
 
-		if (!empty(self::$_instances[$conf['DRIVER']])) {
-			return self::$_instances[$conf['DRIVER']];
+		if (!empty(self::$_instances[$driver_name])) {
+			return self::$_instances[$driver_name];
 		} else {
-			$driver_file = __DIR__.DIRECTORY_SEPARATOR.'Lib'.DIRECTORY_SEPARATOR.'Driver'.DIRECTORY_SEPARATOR.$conf['DRIVER'].'.php';
-			if (!is_file($driver_file)) throw new Rlog_exception('Rlog '.$conf['DRIVER'].' Driver is not found!');
+			$driver_file = __DIR__.DIRECTORY_SEPARATOR.'Lib'.DIRECTORY_SEPARATOR.'Driver'.DIRECTORY_SEPARATOR.$driver_name.'.php';
+			if (!is_file($driver_file)) throw new Rlog_exception('Rlog '.$driver_name.' Driver is not found!');
 			include_once($driver_file);
-			$_class = 'Rlog_'.$conf['DRIVER'];
-			return self::$_instances[$conf['DRIVER']] = new $_class($conf);
+			$_class = 'Rlog_'.$driver_name;
+			return self::$_instances[$driver_name] = new $_class($conf);
 		}
 	}
 
 	public function emerg($type, $message, $context='')
 	{
-		$this->save(RLog_level::EMERG, $type, $message, $context);
+		return $this->save(RLog_level::EMERG, $type, $message, $context);
 	}
 
 	public function alert($type, $message, $context='')
 	{
-		$this->save(RLog_level::ALERT, $type, $message, $context);
+		return $this->save(RLog_level::ALERT, $type, $message, $context);
 	}
 
 	public function crit($type, $message, $context='')
 	{
-		$this->save(RLog_level::CRIT, $type, $message, $context);
+		return $this->save(RLog_level::CRIT, $type, $message, $context);
 	}
 
 	public function error($type, $message, $context='')
 	{
-		$this->save(RLog_level::ERROR, $type, $message, $context);
+		return $this->save(RLog_level::ERROR, $type, $message, $context);
 	}
 
 	public function warn($type, $message, $context='')
 	{
-		$this->save(RLog_level::WARN, $type, $message, $context);
+		return $this->save(RLog_level::WARN, $type, $message, $context);
 	}
 
 	public function notice($type, $message, $context='')
 	{
-		$this->save(RLog_level::NOTICE, $type, $message, $context);
+		return $this->save(RLog_level::NOTICE, $type, $message, $context);
 	}
 
 	public function info($type, $message, $context='')
 	{
-		$this->save(RLog_level::INFO, $type, $message, $context);
+		return $this->save(RLog_level::INFO, $type, $message, $context);
 	}
 
 	public function debug($type, $message, $context='')
 	{
-		$this->save(RLog_level::DEBUG, $type, $message, $context);
+		return $this->save(RLog_level::DEBUG, $type, $message, $context);
 	}
 
 	public function __call($method, $args)

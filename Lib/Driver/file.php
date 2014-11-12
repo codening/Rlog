@@ -5,7 +5,10 @@ class Rlog_file extends Rlog
 	{
 		parent::__construct();
 
-		$this->_config = $conf;
+		if (!empty($conf)) {
+			$this->_config['LOG_PATH'] = isset($conf['LOG_PATH']) && !empty($conf['LOG_PATH']) ? $conf['LOG_PATH'] : '';
+			$this->_config['LOG_MULTI'] = isset($conf['LOG_MULTI']) && $conf['LOG_MULTI']==true ? true : false;
+		}
 	}
 
 	protected function date_format()
@@ -98,12 +101,13 @@ class Rlog_file extends Rlog
 		}
 		$this->check_dir($file_path);
 		$file = $file_path.DIRECTORY_SEPARATOR.'log_'.date('Ymd').'.log';
+		echo $file;
 
 		$date = $this->date_format();
 		$context = $this->context_format($context);
 		$msg = $date.' ['.$level.'] '.$message.PHP_EOL;
 		if ($context != '') $msg .= $context.PHP_EOL;
 
-		file_put_contents($file, $msg, FILE_APPEND);
+		return file_put_contents($file, $msg, FILE_APPEND);
 	}
 }

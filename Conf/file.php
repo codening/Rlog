@@ -1,6 +1,5 @@
 <?php
 return array(
-	'DRIVER'=>"file",
-	'LOG_PATH'=>"E:\wamp\www\demo\dd",
-	'LOG_MULTI'=>true,
+	'LOG_PATH'=>'',
+	'LOG_MULTI'=>false,
 	);
