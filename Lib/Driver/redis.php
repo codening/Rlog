@@ -12,7 +12,7 @@ class Rlog_redis extends Rlog
 			$this->_config['REDIS_PORT'] = isset($conf['REDIS_PORT']) && !empty($conf['REDIS_PORT']) ? $conf['REDIS_HOST'] : '6379';
 			$this->_config['REDIS_AUTH'] = isset($conf['REDIS_AUTH']) && !empty($conf['REDIS_AUTH']) ? $conf['REDIS_AUTH'] : '';
 			$this->_config['REDIS_TIMEOUT'] = isset($conf['REDIS_TIMEOUT']) && !empty($conf['REDIS_TIMEOUT']) ? $conf['REDIS_TIMEOUT'] : 0;
-			$this->_config['REDIS_PCONNECT'] = isset($conf['REDIS_PCONNECT']) && $conf['REDIS_PCONNECT']==true ? true : false;
+			$this->_config['REDIS_PCONNECT'] = isset($conf['REDIS_PCONNECT']) && strtolower($conf['REDIS_PCONNECT'])==true ? true : false;
 			$this->_config['REDIS_DB'] = isset($conf['REDIS_DB']) ? $conf['REDIS_DB'] : 0;
 			if (!isset($conf['REDIS_QUEUE_KEY'])) throw new Rlog_exception("redis queue key is not set!");
 			$this->_config['REDIS_QUEUE_KEY'] = $conf['REDIS_QUEUE_KEY'];

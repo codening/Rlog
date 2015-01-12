@@ -92,7 +92,6 @@ class Rlog_file extends Rlog
 
 	protected function save($level, $type, $message, $context)
 	{
-
 		// 判断是否需要多个log文件
 		if ($this->_config['LOG_MULTI']) {
 			$file_path = $this->_config['LOG_PATH'].DIRECTORY_SEPARATOR.$type.DIRECTORY_SEPARATOR.date('Ym').DIRECTORY_SEPARATOR.date("d");
@@ -101,7 +100,6 @@ class Rlog_file extends Rlog
 		}
 		$this->check_dir($file_path);
 		$file = $file_path.DIRECTORY_SEPARATOR.'log_'.date('Ymd').'.log';
-		echo $file;
 
 		$date = $this->date_format();
 		$context = $this->context_format($context);

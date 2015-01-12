@@ -85,7 +85,7 @@ abstract class Rlog
 
 	public function __call($method, $args)
 	{
-		throw new Rlog_exception(sprintf('method not allowed: %s', $method));
+		throw new Rlog_exception(sprintf('The function is not defined: %s', $method));
 	}
 
 	abstract protected function save($level, $type, $message, $context);
